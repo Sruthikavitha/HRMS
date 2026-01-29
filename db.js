@@ -4,7 +4,48 @@ const path = require('path');
 const file = path.join(__dirname, 'db.json');
 
 let db = {
-  data: { users: [], certificates: [], requests: [], logs: [], _id: { users: 0, certificates: 0, requests: 0, logs: 0 } }
+  data: {
+    users: [],
+    employees: [],
+    departments: [],
+    // Recruitment
+    jobRequirements: [],
+    jobPostings: [],
+    candidates: [],
+    interviews: [],
+    backgroundVerifications: [],
+    // Leave & Attendance
+    leaveTypes: [],
+    leaveRequests: [],
+    attendance: [],
+    // Engagement
+    engagement: [],
+    insuranceRecords: [],
+    // Exit
+    separations: [],
+    noDueClearances: [],
+    exitDocuments: [],
+    // Performance
+    performanceReviews: [],
+    // Audit
+    auditLogs: [],
+    // Counters
+    _id: {
+      users: 0,
+      employees: 0,
+      jobRequirements: 0,
+      jobPostings: 0,
+      candidates: 0,
+      interviews: 0,
+      backgroundVerifications: 0,
+      leaveRequests: 0,
+      attendance: 0,
+      engagement: 0,
+      separations: 0,
+      performanceReviews: 0,
+      auditLogs: 0
+    }
+  }
 };
 
 function read() {
@@ -12,9 +53,48 @@ function read() {
     try {
       db.data = JSON.parse(fs.readFileSync(file, 'utf-8'));
     } catch (e) {
-      db.data = { users: [], certificates: [], requests: [], logs: [], _id: { users: 0, certificates: 0, requests: 0, logs: 0 } };
+      console.error('Error reading db.json:', e);
+      db.data = createDefaultSchema();
     }
   }
+}
+
+function createDefaultSchema() {
+  return {
+    users: [],
+    employees: [],
+    departments: [],
+    jobRequirements: [],
+    jobPostings: [],
+    candidates: [],
+    interviews: [],
+    backgroundVerifications: [],
+    leaveTypes: [],
+    leaveRequests: [],
+    attendance: [],
+    engagement: [],
+    insuranceRecords: [],
+    separations: [],
+    noDueClearances: [],
+    exitDocuments: [],
+    performanceReviews: [],
+    auditLogs: [],
+    _id: {
+      users: 0,
+      employees: 0,
+      jobRequirements: 0,
+      jobPostings: 0,
+      candidates: 0,
+      interviews: 0,
+      backgroundVerifications: 0,
+      leaveRequests: 0,
+      attendance: 0,
+      engagement: 0,
+      separations: 0,
+      performanceReviews: 0,
+      auditLogs: 0
+    }
+  };
 }
 
 function write() {

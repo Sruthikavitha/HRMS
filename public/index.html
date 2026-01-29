@@ -1,79 +1,284 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Certificate Management System</title>
-
-  <!-- Bootstrap -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
-  <!-- Custom Styles -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart HRMS - Human Resource Management System</title>
   <link rel="stylesheet" href="/styles.css">
 </head>
-
 <body>
-
-  <!-- 🌈 Animated Background -->
-  <div class="animated-bg">
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
-
-  <!-- App Content -->
-  <div class="app-bg">
-    <div class="container py-5">
-
-      <!-- 🔐 Login Card -->
-      <div id="loginCard" class="card mx-auto" style="max-width:420px;">
-        <div class="card-body p-4">
-          <h4 class="card-title text-center mb-2">Welcome Back 👋</h4>
-          <p class="text-center text-muted mb-4">
-            Sign in to manage certificates
-          </p>
-
-          <div id="loginAlert"></div>
-
-          <form id="loginForm">
-            <div class="mb-3">
-              <label class="form-label">Email</label>
-              <input type="email" id="email" class="form-control" placeholder="you@example.com" required>
+  <div id="app">
+    <!-- Navigation -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="logo">
+          <i class="icon-users"></i>
+          <span>Smart HRMS</span>
+        </div>
+        <ul class="nav-menu" id="navMenu">
+          <li><a href="#dashboard">Dashboard</a></li>
+          <li><a href="#employees">Employees</a></li>
+          <li><a href="#recruitment">Recruitment</a></li>
+          <li><a href="#leave">Leave</a></li>
+          <li><a href="#engagement">Engagement</a></li>
+          <li><a href="#exit">Exit</a></li>
+          <li><a href="#analytics">Analytics</a></li>
+          <li class="user-menu">
+            <button id="userBtn" class="user-btn">👤 User</button>
+            <div id="userDropdown" class="dropdown-menu">
+              <a href="#profile">Profile</a>
+              <a href="#settings">Settings</a>
+              <a href="#logout" onclick="logout()">Logout</a>
             </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
 
-            <div class="mb-3">
-              <label class="form-label">Password</label>
-              <input type="password" id="password" class="form-control" placeholder="••••••••" required>
-            </div>
-
-            <button class="btn btn-primary w-100 mt-3" type="submit">
-              Sign In
-            </button>
-          </form>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-content">
+        <div class="menu-section">
+          <h3>Main</h3>
+          <ul>
+            <li><a href="#dashboard" class="menu-link active">📊 Dashboard</a></li>
+            <li><a href="#employees" class="menu-link">👥 Employees</a></li>
+          </ul>
+        </div>
+        <div class="menu-section">
+          <h3>HR Operations</h3>
+          <ul>
+            <li><a href="#recruitment" class="menu-link">🔍 Recruitment</a></li>
+            <li><a href="#leave" class="menu-link">📋 Leave Management</a></li>
+            <li><a href="#attendance" class="menu-link">📍 Attendance</a></li>
+            <li><a href="#engagement" class="menu-link">💬 Engagement</a></li>
+          </ul>
+        </div>
+        <div class="menu-section">
+          <h3>Exit & Reports</h3>
+          <ul>
+            <li><a href="#exit" class="menu-link">🚪 Exit Management</a></li>
+            <li><a href="#analytics" class="menu-link">📈 Analytics</a></li>
+          </ul>
         </div>
       </div>
+    </aside>
 
-      <!-- 📊 Main App -->
-      <div id="app" style="display:none;">
-
-        <!-- Header -->
-        <div class="d-flex justify-content-between align-items-center mb-4">
-          <h3 id="welcome"></h3>
-          <button id="logoutBtn" class="btn btn-outline-light btn-sm">
-            Logout
-          </button>
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Dashboard Section -->
+      <section id="dashboard" class="page active">
+        <div class="page-header">
+          <h1>Dashboard</h1>
+          <p>Welcome back! Here's an overview of your HR metrics.</p>
         </div>
 
-        <!-- Role Views -->
-        <div id="roleViews"></div>
+        <div class="dashboard-grid">
+          <!-- KPI Cards -->
+          <div class="stat-card gradient-blue">
+            <div class="stat-icon">👥</div>
+            <div class="stat-info">
+              <h3>Total Employees</h3>
+              <p class="stat-number" id="totalEmployees">0</p>
+            </div>
+          </div>
 
+          <div class="stat-card gradient-green">
+            <div class="stat-icon">✅</div>
+            <div class="stat-info">
+              <h3>Active Employees</h3>
+              <p class="stat-number" id="activeEmployees">0</p>
+            </div>
+          </div>
+
+          <div class="stat-card gradient-orange">
+            <div class="stat-icon">📁</div>
+            <div class="stat-info">
+              <h3>Open Positions</h3>
+              <p class="stat-number" id="openPositions">0</p>
+            </div>
+          </div>
+
+          <div class="stat-card gradient-red">
+            <div class="stat-icon">📉</div>
+            <div class="stat-info">
+              <h3>Attrition Rate</h3>
+              <p class="stat-number" id="attritionRate">0%</p>
+            </div>
+          </div>
+
+          <div class="stat-card gradient-purple">
+            <div class="stat-icon">⏳</div>
+            <div class="stat-info">
+              <h3>Pending Approvals</h3>
+              <p class="stat-number" id="pendingApprovals">0</p>
+            </div>
+          </div>
+
+          <div class="stat-card gradient-cyan">
+            <div class="stat-icon">🎯</div>
+            <div class="stat-info">
+              <h3>Separations</h3>
+              <p class="stat-number" id="separations">0</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="chart-container">
+          <div class="chart-box">
+            <h3>Headcount by Department</h3>
+            <div id="headcountChart" class="chart"></div>
+          </div>
+          <div class="chart-box">
+            <h3>Salary Distribution</h3>
+            <div id="salaryChart" class="chart"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Employees Section -->
+      <section id="employees" class="page">
+        <div class="page-header">
+          <h1>Employee Management</h1>
+          <button class="btn btn-primary" onclick="showEmployeeForm()">+ Add Employee</button>
+        </div>
+        
+        <div class="search-box">
+          <input type="text" id="employeeSearch" placeholder="Search employees..." class="search-input">
+          <select id="departmentFilter" class="filter-select">
+            <option value="">All Departments</option>
+          </select>
+        </div>
+
+        <div id="employeesList" class="employees-grid"></div>
+      </section>
+
+      <!-- Recruitment Section -->
+      <section id="recruitment" class="page">
+        <div class="page-header">
+          <h1>Recruitment Management</h1>
+          <button class="btn btn-primary" onclick="showRecruitmentForm()">+ New Job Posting</button>
+        </div>
+
+        <div class="tabs">
+          <button class="tab-btn active" onclick="showTab('job-postings')">Job Postings</button>
+          <button class="tab-btn" onclick="showTab('candidates')">Candidates</button>
+          <button class="tab-btn" onclick="showTab('interviews')">Interviews</button>
+        </div>
+
+        <div id="job-postings" class="tab-content active">
+          <div id="jobPostingsList" class="cards-grid"></div>
+        </div>
+
+        <div id="candidates" class="tab-content">
+          <div id="candidatesList" class="cards-grid"></div>
+        </div>
+
+        <div id="interviews" class="tab-content">
+          <div id="interviewsList" class="cards-grid"></div>
+        </div>
+      </section>
+
+      <!-- Leave Section -->
+      <section id="leave" class="page">
+        <div class="page-header">
+          <h1>Leave Management</h1>
+          <button class="btn btn-primary" onclick="showLeaveForm()">+ Request Leave</button>
+        </div>
+
+        <div class="tabs">
+          <button class="tab-btn active" onclick="showTab('leave-types')">Leave Types</button>
+          <button class="tab-btn" onclick="showTab('leave-requests')">Requests</button>
+        </div>
+
+        <div id="leave-types" class="tab-content active">
+          <div id="leaveTypesList" class="table-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Leave Type</th>
+                  <th>Days Per Year</th>
+                  <th>Paid</th>
+                  <th>Requires Approval</th>
+                </tr>
+              </thead>
+              <tbody id="leaveTypesTable"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="leave-requests" class="tab-content">
+          <div id="leaveRequestsList" class="table-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Employee</th>
+                  <th>Type</th>
+                  <th>From Date</th>
+                  <th>To Date</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="leaveRequestsTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Engagement Section -->
+      <section id="engagement" class="page">
+        <div class="page-header">
+          <h1>Employee Engagement</h1>
+          <button class="btn btn-primary" onclick="showEngagementForm()">+ New Activity</button>
+        </div>
+
+        <div id="engagementList" class="cards-grid"></div>
+      </section>
+
+      <!-- Exit Section -->
+      <section id="exit" class="page">
+        <div class="page-header">
+          <h1>Exit Management</h1>
+          <button class="btn btn-primary" onclick="showExitForm()">+ Initiate Separation</button>
+        </div>
+
+        <div id="separationsList" class="cards-grid"></div>
+      </section>
+
+      <!-- Analytics Section -->
+      <section id="analytics" class="page">
+        <div class="page-header">
+          <h1>HR Analytics & Reports</h1>
+        </div>
+
+        <div class="analytics-container">
+          <div class="report-box">
+            <h3>📊 Key Metrics</h3>
+            <div id="analyticsMetrics" class="metrics-list"></div>
+          </div>
+
+          <div class="report-box">
+            <h3>📈 Trends</h3>
+            <div id="analyticsTrends" class="trends-list"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Modals -->
+    <div id="modal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <div id="modalBody"></div>
       </div>
-
     </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
   </div>
 
-  <!-- App Logic -->
   <script src="/app.js"></script>
 </body>
 </html>
